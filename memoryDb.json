@@ -1,23 +1,26 @@
 {
   "ids": {
-    "User": 4,
-    "AccessToken": 9,
+    "User": 5,
+    "AccessToken": 13,
     "ACL": 1,
     "RoleMapping": 1,
     "Role": 1,
     "user": 1,
     "tweet": 6,
     "comment": 6,
-    "like": 9,
-    "avatar": 4
+    "like": 14,
+    "avatar": 5
   },
   "models": {
     "User": {
       "1": "{\"username\":\"James\",\"password\":\"$2a$10$YmCNbVtp.DS/UuapQ3bF8.hye6/TYP9uZiRyO8Npnh0yzQ44Hhtla\",\"email\":\"james@james.com\",\"created\":\"2014-11-13T23:57:43.064Z\",\"id\":1,\"avatar\":\"img/avatar/15.png\"}",
       "2": "{\"username\":\"Bob\",\"password\":\"$2a$10$j4bSk8cG8Cq7rp1dZuzJYuwiC4mvtnMJZgcTxu76QFbrKAQcjq5Oe\",\"email\":\"bob@bob.com\",\"created\":\"2014-11-14T00:03:43.678Z\",\"id\":2,\"avatar\":\"img/avatar/11.png\"}",
-      "3": "{\"username\":\"Mary\",\"password\":\"$2a$10$hBxMdpN0PeZhVu0ZCgUZgO2kcU2gRYGgbibQ4W5JmYk/Bvz/yu9bK\",\"email\":\"mary@mary.com\",\"created\":\"2014-11-14T08:30:13.355Z\",\"id\":3,\"avatar\":\"img/avatar/8.png\"}"
+      "3": "{\"username\":\"Mary\",\"password\":\"$2a$10$hBxMdpN0PeZhVu0ZCgUZgO2kcU2gRYGgbibQ4W5JmYk/Bvz/yu9bK\",\"email\":\"mary@mary.com\",\"created\":\"2014-11-14T08:30:13.355Z\",\"id\":3,\"avatar\":\"img/avatar/8.png\"}",
+      "4": "{\"username\":\"takeshi\",\"password\":\"$2a$10$0xjXyNtBDW7z0MCdK1Hq1u.iMKApzHRxJvuMC/KUN0lpc8rTSFX0K\",\"email\":\"mayamatakeshi@gmail.com\",\"created\":\"2016-03-07T12:24:33.609Z\",\"avatar\":\"img/avatar/1.png\",\"id\":4}"
     },
-    "AccessToken": {},
+    "AccessToken": {
+      "GLgWbTfP2xEPLwiwcFMrv0po9MMeU6FQY4F8GR62evgRpw0PqKQXoAttjUSYDM2o": "{\"id\":\"GLgWbTfP2xEPLwiwcFMrv0po9MMeU6FQY4F8GR62evgRpw0PqKQXoAttjUSYDM2o\",\"ttl\":1209600,\"created\":\"2016-03-07T12:39:07.787Z\",\"userId\":4}"
+    },
     "ACL": {},
     "RoleMapping": {},
     "Role": {},
@@ -43,12 +46,14 @@
       "4": "{\"id\":4,\"tweetId\":5,\"ownerId\":3}",
       "5": "{\"id\":5,\"tweetId\":5,\"ownerId\":2}",
       "7": "{\"id\":7,\"tweetId\":4,\"ownerId\":1}",
-      "8": "{\"id\":8,\"tweetId\":5,\"ownerId\":1}"
+      "8": "{\"id\":8,\"tweetId\":5,\"ownerId\":1}",
+      "10": "{\"tweetId\":5,\"ownerId\":4,\"id\":10}"
     },
     "avatar": {
       "1": "{\"url\":\"img/avatar/15.png\",\"ownerId\":1,\"id\":1}",
       "2": "{\"url\":\"img/avatar/11.png\",\"ownerId\":2,\"id\":2}",
-      "3": "{\"url\":\"img/avatar/8.png\",\"ownerId\":3,\"id\":3}"
+      "3": "{\"url\":\"img/avatar/8.png\",\"ownerId\":3,\"id\":3}",
+      "4": "{\"url\":\"img/avatar/1.png\",\"ownerId\":4,\"id\":4}"
     }
   }
 }

@@ -1,7 +1,7 @@
 (function (window, angular, undefined) {
     'use strict';
 
-    var urlBase = "http://localhost:3000/api";
+    var urlBase = "http://192.168.88.72:3000/api";
     var authHeader = 'authorization';
 
     /**
