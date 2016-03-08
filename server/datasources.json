@@ -3,5 +3,10 @@
     "name": "db",
     "connector": "memory",
     "file": "memoryDb.json"
+  },
+  "mongodbDS": {
+    "name": "mongodbDS",
+    "connector": "mongodb",
+    "database": "alarmdb"
   }
 }

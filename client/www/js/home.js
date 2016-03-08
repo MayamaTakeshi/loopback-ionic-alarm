@@ -1,16 +1,20 @@
-angular.module('looper.home', ['lbServices'])
-.controller('HomeTabCtrl', function ($scope, $location, User, Tweet, Like, Avatar) {
+angular.module('alarmer.home', ['lbServices'])
+.controller('HomeTabCtrl', function ($scope, $location, User, Alarm) {
     $scope.currentUser = User.getCurrent();
-    $scope.newTweet = {};
-    $scope.tweets = [];
+    $scope.newAlarm = {};
+    $scope.alarms = [];
+
+    $scope.timeout = 0;
+    $scope.noMoreAlarms = false;
+
     /**
      * @type {number}
      * @desctipion
-     * We search new tweets wich are smaller than the
+     * We search new alarms wich are smaller than the
      * last id we received. Set this value to a high number to be
-     * shure that the newest tweets will found
+     * shure that the newest alarms will found
      */
-    $scope.lastTweetId = 9999999999;
+    $scope.lastAlarmDate = undefined;
 
     /**
      * showAlert()
@@ -27,99 +31,59 @@ angular.module('looper.home', ['lbServices'])
 
     /**
      * loadMore()
-     * get the next 5 tweets and push them to the current tweets
+     * get the next 5 alarms and push them to the current alarms
      */
     $scope.loadMore = function () {
-        $scope.noMoreTweets = false;
-        Tweet
+	console.log("loadMore called");
+        var where = undefined;
+	if($scope.lastAlarmDate) {
+	    where = {"date": {'lt': $scope.lastAlarmDate} };
+	} else { 
+	    where = undefined
+        }
+       	Alarm 
             .find({
                 filter: {
-                    order: 'id DESC',
+                    order: 'date DESC',
                     limit: '5',
-                    where: {
-                        id: {lt: $scope.lastTweetId}
-                    }
+                    where: where
                 }
             })
             .$promise
             .then(
             function (res) {
                 /**
-                 * Check if there are any tweets
+                 * Check if there are any alarms
                  */
+                console.log("Checking data. length=" + res.length);
                 if(res.length>0){
-                angular.forEach(res, function (values) {
-                    /**
-                     * Get the amout of comments of the tweet
-                     */
-                    Tweet
-                        .comments.count({id: values.id})
-                        .$promise
-                        .then(function (res) {
-                            values.comments = res.count;
-                        });
-                    /**
-                     * Get the amount of likes of the tweet
-                     */
-                    Tweet
-                        .likes.count({id: values.id})
-                        .$promise
-                        .then(function (res) {
-                            values.likes = res.count;
-                        });
-                    /**
-                     * Check if the current user liked this tweet
-                     */
-                    Like
-                        .count(
-                        {
-                            where: {
-                                tweetId: values.id,
-                                ownerId: $scope.currentUser.id
-                            }
-                        })
-                        .$promise
-                        .then(function (res) {
-                            values.userLikedTweet = res.count === 1;
-                        });
-                    /**
-                     * Find avatar from the user
-                     */
-                    Avatar
-                        .find({filter: {where: {ownerId: values.ownerId}}})
-                        .$promise
-                        .then(function(res){
-                            values.avatar = res[0].url;
-                        });
+                    angular.forEach(res, function (values) {
+                       /**
+                        * Push these values to the alarms array
+                        */
+                        $scope.alarms.push(values)
 
+                    });
                     /**
-                     * Push these values to the tweets array
-                     */
-                    $scope.tweets.push(values)
-
-                });
-                /**
-                 * Save the last tweet we received
-                 */
-                $scope.lastTweetId = $scope.tweets[$scope.tweets.length - 1].id;
+                    * Save the last alarm we received
+                    */
+                    console.dir($scope.alarms[$scope.alarms.length - 1]);
+                    $scope.lastAlarmDate = $scope.alarms[$scope.alarms.length - 1].date;
+                    console.log("maybe more");
+                    $scope.noMoreAlarms = false;
                 } else {
-                    $scope.noMoreTweets = true;
-                    $scope.$broadcast('scroll.infiniteScrollComplete');
-                    $scope.$broadcast('scroll.refreshComplete');
+                    //$scope.$broadcast('scroll.infiniteScrollComplete');
+                    //$scope.$broadcast('scroll.refreshComplete');
+                    console.log("no more");
+                    $scope.noMoreAlarms = true;
                 }
             },
             function (err) {
                 console.log(err);
+                //$scope.$broadcast('scroll.infiniteScrollComplete');
+                //$scope.$broadcast('scroll.refreshComplete');
             })
             .finally(function () {
-                /**
-                 * If there are no more tweets tell
-                 * ionic-infinityScroll that there are no more
-                 * tweets to fetch
-                 */
-                if ($scope.lastTweetId === 1) {
-                    $scope.noMoreTweets = true;
-                }
                 /**
                  * Stop the loading animation
                  */
@@ -132,82 +96,32 @@ angular.module('looper.home', ['lbServices'])
      * @name refresh()
      * @desctiption
      * Function for 'pull to refresh'
-     * delete current tweets and reload them
+     * delete current alarms and reload them
      */
     $scope.refresh = function () {
-        delete $scope.tweets;
-        $scope.tweets = [];
-        $scope.lastTweetId = 999999999;
+	console.log("refresh called");
+        delete $scope.alarms;
+        $scope.alarms = [];
+        $scope.lastAlarmDate = undefined;
         $scope.loadMore();
     };
 
     /**
-     * @name go()
-     * @param {string} path
-     * Redirect the user to the parh location
-     * Used to navigate to the comments
-     */
-    $scope.go = function (path) {
-        $location.url(path);
-    };
-
-    /**
-     * @name like()
-     * @param {number} index
-     * Set or remove likes
-     * index parameter is the index of the tweet in the array
-     */
-    $scope.like = function (index) {
-        if ($scope.tweets[index].userLikedTweet) {
-            /**
-             * If user liked the tweet before find the id
-             * belonging to his like and remove them
-             */
-            Like
-                .find({filter: {where: {ownerId: $scope.currentUser.id, tweetId: $scope.tweets[index].id}}})
-                .$promise
-                .then(function (res) {
-                    Like.destroyById({id: res[0].id},
-                        function (res) {
-                            /**
-                             * Remove like from the view
-                             */
-                            $scope.tweets[index].userLikedTweet = false;
-                            $scope.tweets[index].likes -= 1;
-                        },
-                        function (err) {
-                            console.log(err);
-                        })
-                })
-        } else {
-            /**
-             * Create a new entry in the like model
-             */
-            Like.create({tweetId: $scope.tweets[index].id, ownerId: $scope.currentUser.id},
-                function (res) {
-                    $scope.tweets[index].userLikedTweet = true;
-                    $scope.tweets[index].likes += 1;
-                },
-                function (err) {
-                    console.log(err);
-                })
-        }
-
-
-    };
-
-    /**
-     * @name saveTweet()
+     * @name saveAlarm()
      * @description
-     * Create a new entry in the tweet model
+     * Create a new entry in the alarm model
      */
-    $scope.saveTweet = function () {
-        $scope.newTweet.date = new Date().toJSON();
-        $scope.newTweet.ownerId = $scope.currentUser.id;
-        $scope.newTweet.ownerUsername = $scope.currentUser.username;
-        Tweet.create($scope.newTweet,
+    $scope.saveAlarm = function () {
+        var new_date = new Date(new Date().getTime() + (Number($scope.newAlarm.timeout) * 1000)).toJSON();
+	console.log('new_date=' + new_date);
+        $scope.newAlarm.date = new_date 
+        $scope.newAlarm.ownerId = $scope.currentUser.id;
+	$scope.newAlarm.triggered = false;
+	$scope.noMoreAlarms = true; // We need to disable this here otherwise the interface (home.html) will trigger loadMore()
+        Alarm.create($scope.newAlarm,
             function (res) {
-                delete $scope.newTweet;
+                delete $scope.newAlarm;
+                console.log("initiating refresh after creation of alarm");
                 $scope.refresh();
             },
             function (err) {

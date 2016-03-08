@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('looper', ['looper.account','looper.dev','looper.home','looper.login','looper.register','looper.tweet', 'ionic','lbServices','bd.timedistance'])
+angular.module('alarmer', ['alarmer.account','alarmer.dev','alarmer.home','alarmer.login','alarmer.register','alarmer.alarm', 'ionic','lbServices','bd.timedistance'])
 
     /*.run(function ($ionicPlatform) {
      $ionicPlatform.ready(function () {
@@ -50,12 +50,12 @@ angular.module('looper', ['looper.account','looper.dev','looper.home','looper.lo
                     }
                 }
             })
-            .state('tabs.tweet', {
-                url: '/tweet/:id',
+            .state('tabs.alarm', {
+                url: '/alarm/:id',
                 views: {
                     'home-tab': {
-                        templateUrl: 'templates/tweet.html',
-                        controller: 'TweetCtrl'
+                        templateUrl: 'templates/alarm.html',
+                        controller: 'AlarmCtrl'
                     }
                 }
             })

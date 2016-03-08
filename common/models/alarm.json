@@ -1,8 +1,8 @@
 {
-  "name": "comment",
+  "name": "alarm",
   "base": "PersistedModel",
   "properties": {
-    "content": {
+    "message": {
       "type": "string",
       "required": true
     },
@@ -10,23 +10,19 @@
       "type": "date",
       "required": true
     },
-    "username": {
-      "type": "string"
+    "triggered": {
+      "type": "boolean",
+      "required": true
     }
   },
   "validations": [],
   "relations": {
-    "tweet": {
-      "type": "belongsTo",
-      "model": "tweet",
-      "foreignKey": "tweetId"
-    },
     "user": {
       "type": "belongsTo",
-      "model": "User",
+      "model": "user",
       "foreignKey": "ownerId"
     }
   },
   "acls": [],
-  "methods": []
+  "methods": {}
 }

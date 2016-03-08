@@ -9,25 +9,16 @@
     "created": {
       "type": "date",
       "required": true
-    },
-    "avatar": {
-      "type": "string",
-      "required": true
     }
   },
   "validations": [],
   "relations": {
-    "tweets": {
+    "alarms": {
       "type": "hasMany",
-      "model": "tweet",
-      "foreignKey": "ownerId"
-    },
-    "likes": {
-      "type": "hasMany",
-      "model": "like",
+      "model": "alarm",
       "foreignKey": "ownerId"
     }
   },
   "acls": [],
-  "methods": []
+  "methods": {}
 }

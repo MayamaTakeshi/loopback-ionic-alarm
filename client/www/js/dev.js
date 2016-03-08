@@ -1,5 +1,5 @@
-angular.module('looper.dev', ['lbServices', 'ionic'])
-    .controller('DevCtrl', function ($scope, User, Avatar) {
+angular.module('alarmer.dev', ['lbServices', 'ionic'])
+    .controller('DevCtrl', function ($scope, User) {
         /**
          * Blank page for testing purposes
          */
