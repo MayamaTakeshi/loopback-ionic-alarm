@@ -61,7 +61,8 @@ angular.module('alarmer.home', ['lbServices'])
                        /**
                         * Push these values to the alarms array
                         */
-                        $scope.alarms.push(values)
+                        values.date = new Date(values.date).toLocaleString(); // it seems looback Angular SDK doesn't take care of converting dates from String to Date so we need to convert the string to a date and then convert it to local time
+                        $scope.alarms.push(values);
 
                     });
                     /**
@@ -80,8 +81,9 @@ angular.module('alarmer.home', ['lbServices'])
             },
             function (err) {
                 console.log(err);
-                //$scope.$broadcast('scroll.infiniteScrollComplete');
-                //$scope.$broadcast('scroll.refreshComplete');
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+                $scope.$broadcast('scroll.refreshComplete');
+		$scope.noMoreAlarms = true;
             })
             .finally(function () {
                 /**

@@ -3,6 +3,10 @@ var boot = require('loopback-boot');
 
 var app = module.exports = loopback();
 
+var Notification = app.models.notification;
+var Application = app.models.application;
+var PushModel = app.models.push;
+
 // Set up the /favicon.ico
 app.use(loopback.favicon());
 
@@ -36,6 +40,12 @@ app.start = function() {
     console.log('Web server listening at: %s', app.get('url'));
   });
 };
+
+/*
+setInterval(function() {
+	console.log("tick");
+}, 1000);
+*/
 
 // start the server if `$ node server.js`
 if (require.main === module) {

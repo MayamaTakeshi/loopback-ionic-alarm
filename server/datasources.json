@@ -5,8 +5,8 @@
     "file": "memoryDb.json"
   },
   "mongodbDS": {
+    "database": "alarmdb",
     "name": "mongodbDS",
-    "connector": "mongodb",
-    "database": "alarmdb"
+    "connector": "mongodb"
   }
 }
