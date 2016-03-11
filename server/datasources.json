@@ -1,12 +1,14 @@
 {
-  "db": {
-    "name": "db",
-    "connector": "memory",
-    "file": "memoryDb.json"
-  },
   "mongodbDS": {
     "database": "alarmdb",
     "name": "mongodbDS",
     "connector": "mongodb"
+  },
+  "push": {
+    "name": "push",
+    "connector": "loopback-component-push",
+    "installation": "installation",
+    "notification": "notification",
+    "application": "application"
   }
 }

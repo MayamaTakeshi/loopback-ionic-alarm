@@ -33,5 +33,21 @@
   "alarm": {
     "dataSource": "mongodbDS",
     "public": true
+  },
+  "application": {
+    "dataSource": "mongodbDS",
+    "public": true
+  },
+  "installation": {
+    "dataSource": "mongodbDS",
+    "public": true
+  },
+  "notification": {
+    "dataSource": "mongodbDS",
+    "public": true
+  },
+  "push": {
+    "dataSource": "push",
+    "public": true
   }
 }

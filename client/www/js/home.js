@@ -37,9 +37,9 @@ angular.module('alarmer.home', ['lbServices'])
 	console.log("loadMore called");
         var where = undefined;
 	if($scope.lastAlarmDate) {
-	    where = {"date": {'lt': $scope.lastAlarmDate} };
+	    where = {"ownerId": User.id, "date": {'lt': $scope.lastAlarmDate} };
 	} else { 
-	    where = undefined
+	    where = {"ownerId": User.id} 
         }
        	Alarm 
             .find({

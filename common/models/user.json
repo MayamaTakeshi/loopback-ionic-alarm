@@ -17,7 +17,7 @@
       "type": "hasMany",
       "model": "alarm",
       "foreignKey": "ownerId"
-    },
+    }
   },
   "acls": [],
   "methods": {}

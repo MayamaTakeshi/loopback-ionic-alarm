@@ -41,13 +41,15 @@ app.start = function() {
   });
 };
 
-/*
-setInterval(function() {
-	console.log("tick");
-}, 1000);
-*/
 
-// start the server if `$ node server.js`
-if (require.main === module) {
-  app.start();
-}
+boot(app, __dirname, function(err) {
+  if(err) throw err;
+
+  require('./push-demo')(app);
+
+  // start the server if `$ node server.js`
+  if (require.main === module) {
+    app.start();
+  }
+});
+
